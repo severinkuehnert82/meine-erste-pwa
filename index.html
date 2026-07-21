@@ -3,162 +3,264 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Familie Kühnert</title>
+<title>Nummerle — Familie Kühnert Edition</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
 
-  :root{
+  :root {
     --green: #1b4332;
     --green-light: #2d6a4f;
+    --green-correct: #2b9348;
+    --yellow-present: #e9c46a;
+    --gray-absent: #4a4a4a;
     --blue: #0f4c81;
     --cream: #f6f4ee;
     --ink: #1c1c1c;
     --gray: #6b6b6b;
+    --card-bg: #ffffff;
   }
 
-  *{ box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
-  html{ scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; }
 
-  body{
+  body {
     margin: 0;
     background: var(--cream);
     color: var(--ink);
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
-  /* subtle shared divider line, green -> blue, echoing the two worlds */
-  .thread{
+  .thread {
     height: 4px;
     width: 100%;
     background: linear-gradient(90deg, var(--green) 0%, var(--green-light) 45%, var(--blue) 55%, var(--blue) 100%);
   }
 
-  header{
+  header {
     text-align: center;
-    padding: 4.5rem 1.5rem 3rem;
+    padding: 2.5rem 1.5rem 1.5rem;
   }
 
-  .eyebrow{
+  .eyebrow {
     font-size: 0.75rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--gray);
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.6rem;
   }
 
-  h1{
+  h1 {
     font-family: 'Fraunces', serif;
     font-weight: 600;
-    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
     margin: 0;
     line-height: 1.05;
   }
 
-  h1 span.g{ color: var(--green); }
-  h1 span.b{ color: var(--blue); }
+  h1 span.g { color: var(--green); }
+  h1 span.b { color: var(--blue); }
 
-  .sub{
-    max-width: 34rem;
-    margin: 1.4rem auto 0;
+  .sub {
+    max-width: 32rem;
+    margin: 0.8rem auto 0;
     color: var(--gray);
-    font-size: 1.05rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
-  main{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 1.5rem 5rem;
-    gap: 2.5rem;
-  }
-
-  @media (max-width: 760px){
-    main{ grid-template-columns: 1fr; }
-  }
-
-  .card{
-    position: relative;
-    border-radius: 18px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-    transition: transform .35s ease, box-shadow .35s ease;
-  }
-
-  .card:hover{
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.14);
-  }
-
-  .card .photo-wrap{
-    position: relative;
-    aspect-ratio: 4 / 5;
-    overflow: hidden;
-  }
-
-  .card img{
+  main {
+    max-width: 500px;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    filter: grayscale(15%);
-    transition: filter .35s ease;
+    margin: 0 auto;
+    padding: 0 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .card:hover img{ filter: grayscale(0%); }
-
-  .tag{
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    padding: 0.35rem 0.8rem;
-    border-radius: 999px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #fff;
-    backdrop-filter: blur(3px);
+  /* Spielfeld Grid */
+  .grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 1.5rem;
   }
 
-  .tag.green{ background: rgba(27,67,50,0.85); }
-  .tag.blue{ background: rgba(15,76,129,0.85); }
-
-  .info{
-    padding: 1.5rem 1.6rem 1.8rem;
+  .row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
   }
 
-  .info h2{
+  .cell {
+    width: clamp(42px, 11vw, 54px);
+    height: clamp(48px, 12vw, 60px);
+    border: 2px solid #dcd7ca;
+    border-radius: 10px;
+    background: var(--card-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: 'Fraunces', serif;
     font-size: 1.5rem;
-    margin: 0 0 0.3rem;
+    font-weight: 700;
+    color: var(--ink);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+    user-select: none;
   }
 
-  .info p.role{
-    margin: 0 0 0.8rem;
-    color: var(--gray);
-    font-size: 0.92rem;
+  .cell.filled {
+    border-color: var(--blue);
+    transform: scale(1.03);
   }
 
-  .info p.desc{
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.55;
-    color: #3a3a3a;
+  /* Animationen & Farben für das Aufdecken */
+  .cell.flip {
+    animation: flipCell 0.5s ease forwards;
   }
 
-  footer{
+  @keyframes flipCell {
+    0% { transform: rotateX(0deg); }
+    50% { transform: rotateX(90deg); }
+    100% { transform: rotateX(0deg); }
+  }
+
+  .cell.correct {
+    background: var(--green-correct) !important;
+    color: #fff !important;
+    border-color: var(--green-correct) !important;
+  }
+
+  .cell.present {
+    background: var(--yellow-present) !important;
+    color: #fff !important;
+    border-color: var(--yellow-present) !important;
+  }
+
+  .cell.absent {
+    background: var(--gray-absent) !important;
+    color: #fff !important;
+    border-color: var(--gray-absent) !important;
+  }
+
+  /* Schütteln bei Fehler (z.B. nicht genug Zahlen) */
+  .row.shake {
+    animation: shakeRow 0.4s ease;
+  }
+
+  @keyframes shakeRow {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+
+  /* Digitales Tastenfeld */
+  .keyboard {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .key {
+    flex: 1;
+    height: 48px;
+    border: none;
+    border-radius: 8px;
+    background: #e2ded4;
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.2s, transform 0.1s;
+    touch-action: manipulation;
+  }
+
+  .key:active {
+    transform: scale(0.95);
+  }
+
+  .key.wide {
+    flex: 1.6;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .key.correct { background: var(--green-correct); color: #fff; }
+  .key.present { background: var(--yellow-present); color: #fff; }
+  .key.absent { background: #999; color: #fff; opacity: 0.5; }
+
+  /* System-Nachrichten */
+  .message-container {
+    min-height: 2.2rem;
+    margin-bottom: 0.8rem;
     text-align: center;
-    padding: 2.5rem 1.5rem 3.5rem;
+  }
+
+  .message {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: var(--ink);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .restart-btn {
+    margin-top: 0.8rem;
+    padding: 0.6rem 1.4rem;
+    border: none;
+    border-radius: 999px;
+    background: var(--blue);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(15,76,129,0.25);
+  }
+
+  .restart-btn:hover {
+    background: #0b3860;
+    transform: translateY(-2px);
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem 1.5rem 2rem;
     color: var(--gray);
     font-size: 0.85rem;
   }
 
-  footer .thread{ max-width: 220px; margin: 0 auto 1.2rem; border-radius: 999px; }
+  footer .thread { max-width: 220px; margin: 0 auto 1.2rem; border-radius: 999px; }
 </style>
 </head>
 <body>
@@ -166,35 +268,38 @@
 <div class="thread"></div>
 
 <header>
-  <div class="eyebrow">Zwei Wege · Eine Familie</div>
-  <h1><span class="g">Aunkirchen</span> &amp; <span class="b">Vilshofen</span></h1>
-  <p class="sub">Auf dem Platz und im Rathaus — Severin und Markus Kühnert setzen sich beide für ihre Gemeinschaft ein.</p>
+  <div class="eyebrow">Zahlenraten · 6 Stellen · 6 Versuche</div>
+  <h1><span class="g">Nummer</span><span class="b">le</span></h1>
+  <p class="sub">Errate den 6-stelligen Code der Familie Kühnert.</p>
 </header>
 
 <main>
-  <div class="card">
-    <div class="photo-wrap">
-      <span class="tag green">FC Aunkirchen</span>
-      <img src="severin.png" alt="Severin Kühnert im Trikot des FC Aunkirchen">
+  <div class="message-container" id="message-container"></div>
+
+  <div class="grid-container" id="grid"></div>
+
+  <div class="keyboard">
+    <div class="keyboard-row">
+      <button class="key" data-key="1">1</button>
+      <button class="key" data-key="2">2</button>
+      <button class="key" data-key="3">3</button>
+      <button class="key" data-key="4">4</button>
+      <button class="key" data-key="5">5</button>
     </div>
-    <div class="info">
-      <h2>Severin Kühnert</h2>
-      <p class="role">Spieler, FC Aunkirchen</p>
-      <p class="desc">Mit Leidenschaft auf dem Platz zuhause — Teil der grünen Mannschaft von FC Aunkirchen.</p>
+    <div class="keyboard-row">
+      <button class="key" data-key="6">6</button>
+      <button class="key" data-key="7">7</button>
+      <button class="key" data-key="8">8</button>
+      <button class="key" data-key="9">9</button>
+      <button class="key" data-key="0">0</button>
+    </div>
+    <div class="keyboard-row">
+      <button class="key wide" data-key="Enter">Bestätigen</button>
+      <button class="key wide" data-key="Backspace">Löschen</button>
     </div>
   </div>
 
-  <div class="card">
-    <div class="photo-wrap">
-      <span class="tag blue">CSU Vilshofen</span>
-      <img src="markus.png" alt="Markus Kühnert, Stadtratskandidat für Vilshofen">
-    </div>
-    <div class="info">
-      <h2>Markus Kühnert</h2>
-      <p class="role">Stadtratskandidat, CSU Vilshofen</p>
-      <p class="desc">Engagiert für Vilshofen — Kandidat zur Stadtratswahl am 8. März.</p>
-    </div>
-  </div>
+  <button class="restart-btn" id="restart-btn" style="display: none;" onclick="initGame()">Neues Spiel starten</button>
 </main>
 
 <footer>
@@ -202,5 +307,184 @@
   Familie Kühnert · Aunkirchen &amp; Vilshofen
 </footer>
 
+<script>
+  const CODE_LENGTH = 6;
+  const MAX_ATTEMPTS = 6;
+
+  let targetCode = [];
+  let currentAttempt = 0;
+  let currentGuess = [];
+  let gameOver = false;
+
+  const grid = document.getElementById('grid');
+  const messageContainer = document.getElementById('message-container');
+  const restartBtn = document.getElementById('restart-btn');
+
+  function initGame() {
+    // 6-stelligen Zufallscode generieren (Zahlen 0-9)
+    targetCode = Array.from({ length: CODE_LENGTH }, () => Math.floor(Math.random() * 10).toString());
+    currentAttempt = 0;
+    currentGuess = [];
+    gameOver = false;
+    
+    messageContainer.innerHTML = '';
+    restartBtn.style.display = 'none';
+
+    // Raster leeren und neu aufbauen
+    grid.innerHTML = '';
+    for (let r = 0; r < MAX_ATTEMPTS; r++) {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.id = `row-${r}`;
+      for (let c = 0; c < CODE_LENGTH; c++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.id = `cell-${r}-${c}`;
+        row.appendChild(cell);
+      }
+      grid.appendChild(row);
+    }
+
+    // Tastenfarben zurücksetzen
+    document.querySelectorAll('.key').forEach(key => {
+      key.classList.remove('correct', 'present', 'absent');
+    });
+  }
+
+  function handleKeyPress(key) {
+    if (gameOver) return;
+
+    if (key === 'Backspace') {
+      if (currentGuess.length > 0) {
+        currentGuess.pop();
+        updateRowUI();
+      }
+    } else if (key === 'Enter') {
+      if (currentGuess.length === CODE_LENGTH) {
+        checkGuess();
+      } else {
+        shakeCurrentRow();
+        showMessage('Bitte 6 Zahlen eingeben!');
+      }
+    } else if (/^[0-9]$/.test(key)) {
+      if (currentGuess.length < CODE_LENGTH) {
+        currentGuess.push(key);
+        updateRowUI();
+      }
+    }
+  }
+
+  function updateRowUI() {
+    for (let c = 0; c < CODE_LENGTH; c++) {
+      const cell = document.getElementById(`cell-${currentAttempt}-${c}`);
+      if (c < currentGuess.length) {
+        cell.textContent = currentGuess[c];
+        cell.classList.add('filled');
+      } else {
+        cell.textContent = '';
+        cell.classList.remove('filled');
+      }
+    }
+  }
+
+  function shakeCurrentRow() {
+    const row = document.getElementById(`row-${currentAttempt}`);
+    row.classList.add('shake');
+    setTimeout(() => row.classList.remove('shake'), 400);
+  }
+
+  function showMessage(text, duration = 2000) {
+    messageContainer.innerHTML = `<div class="message">${text}</div>`;
+    if (duration) {
+      setTimeout(() => {
+        if (messageContainer.firstChild?.textContent === text) {
+          messageContainer.innerHTML = '';
+        }
+      }, duration);
+    }
+  }
+
+  function checkGuess() {
+    const row = document.getElementById(`row-${currentAttempt}`);
+    const guessCopy = [...currentGuess];
+    const targetCopy = [...targetCode];
+    const evaluation = Array(CODE_LENGTH).fill('absent');
+
+    // 1. Pass: Exakte Treffer (Grün)
+    for (let i = 0; i < CODE_LENGTH; i++) {
+      if (guessCopy[i] === targetCopy[i]) {
+        evaluation[i] = 'correct';
+        targetCopy[i] = null;
+        guessCopy[i] = null;
+      }
+    }
+
+    // 2. Pass: Zahlen am falschen Ort (Gelb)
+    for (let i = 0; i < CODE_LENGTH; i++) {
+      if (guessCopy[i] !== null) {
+        const foundIndex = targetCopy.indexOf(guessCopy[i]);
+        if (foundIndex !== -1) {
+          evaluation[i] = 'present';
+          targetCopy[foundIndex] = null;
+        }
+      }
+    }
+
+    // Zeile stufenweise animieren und einfärben
+    currentGuess.forEach((digit, c) => {
+      const cell = document.getElementById(`cell-${currentAttempt}-${c}`);
+      setTimeout(() => {
+        cell.classList.add('flip');
+        cell.classList.add(evaluation[c]);
+
+        // Tastatur-Tasten aktualisieren
+        const keyBtn = document.querySelector(`.key[data-key="${digit}"]`);
+        if (keyBtn) {
+          if (evaluation[c] === 'correct') {
+            keyBtn.className = 'key correct';
+          } else if (evaluation[c] === 'present' && !keyBtn.classList.contains('correct')) {
+            keyBtn.className = 'key present';
+          } else if (evaluation[c] === 'absent' && !keyBtn.classList.contains('correct') && !keyBtn.classList.contains('present')) {
+            keyBtn.className = 'key absent';
+          }
+        }
+      }, c * 150);
+    });
+
+    const isWin = evaluation.every(status => status === 'correct');
+
+    setTimeout(() => {
+      if (isWin) {
+        showMessage('Hervorragend! Code geknackt! 🎉', 0);
+        gameOver = true;
+        restartBtn.style.display = 'block';
+      } else if (currentAttempt === MAX_ATTEMPTS - 1) {
+        showMessage(`Schade! Der Code war: ${targetCode.join('')}`, 0);
+        gameOver = true;
+        restartBtn.style.display = 'block';
+      } else {
+        currentAttempt++;
+        currentGuess = [];
+      }
+    }, CODE_LENGTH * 150 + 100);
+  }
+
+  // Event Listener für On-Screen-Tastatur
+  document.querySelectorAll('.key').forEach(btn => {
+    btn.addEventListener('click', () => {
+      handleKeyPress(btn.getAttribute('data-key'));
+    });
+  });
+
+  // Event Listener für Physische Tastatur
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleKeyPress('Enter');
+    else if (e.key === 'Backspace') handleKeyPress('Backspace');
+    else if (/^[0-9]$/.test(e.key)) handleKeyPress(e.key);
+  });
+
+  // Spiel beim Laden starten
+  initGame();
+</script>
 </body>
 </html>
